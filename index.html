@@ -40,24 +40,6 @@
 
                 if (Modernizr.geolocation) {
                         compatible("geo","Compatible con geolocalizacion.")
-                        var latitud;
-                        var longitud;
-
-                        function setLat(lat){
-                                latitud = lat;
-                        }
-
-                        function getLat(){
-                                return latitud;
-                        }
-
-                        function setLon(lon){
-                                longitud = lon;
-                        }
-
-                        function getLon(){
-                                return longitud;
-                        }
 
 			var options = {
 				  enableHighAccuracy: true,
@@ -67,13 +49,6 @@
 
 			function success(pos) {
 		    	        var crd = pos.coords;
-				var lat_user =crd.latitude;
-				var lon_user =crd.longitude;
-				compatible("lat_dec_user", lat_user);
-				compatible("lon_dec_user", lon_user);
-
-                                setLat(lat_user);
-                                setLon(lon_user);
 
                                 console.log('Your current position is:');
                                 console.log('Latitude : ' + crd.latitude);
@@ -83,9 +58,10 @@
                                 var mapDivUser = document.getElementById("mapUser");
 
 				var map = new google.maps.Map(mapDivUser, {
-					center: {lat: parseFloat(getLat()), lng: parseFloat(getLon())},
-					zoom: 8
+					center: {lat: crd.latitude, lng: crd.longitude},
+					zoom: 18
 				});
+
 
 
 			};
@@ -100,7 +76,7 @@
 					center: {lat: 44.540, lng: -78.546},
 					zoom: 8
 				});
-                                
+
                                 navigator.geolocation.getCurrentPosition(success, error, options);
 
 			}
